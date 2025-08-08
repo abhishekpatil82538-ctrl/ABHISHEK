@@ -43,16 +43,17 @@
             color: #ff6f6;
         }
 
-        /* Pet Section with subtle light paw prints background */
+        /* Pet Section with paw background and zigzag layout */
         .pet-section {
+            position: relative;
             background-color: #FFE4E1;
             margin: 30px auto;
             padding: 25px;
             max-width: 1000px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             overflow: hidden;
+            z-index: 1;
         }
 
         .pet-section::before {
@@ -68,16 +69,27 @@
             border-radius: 10px;
         }
 
-        /* Zig-Zag pet layout */
+        h2 {
+            color: #444;
+            font-family: 'Algerian', sans-serif;
+        }
+
+        /* Zigzag pet container */
         .pet {
             display: flex;
             align-items: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             gap: 20px;
-            position: relative;
-            z-index: 1; /* above paw bg */
+            flex-wrap: wrap;
+            z-index: 2;
         }
 
+        /* Odd pets normal */
+        .pet:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        /* Even pets reversed */
         .pet:nth-child(even) {
             flex-direction: row-reverse;
         }
@@ -87,72 +99,51 @@
             max-width: 100%;
             height: auto;
             border-radius: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            border: 4px solid #f8b500;
-            background-color: #fff;
-            display: block;
-            margin: 0;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
         }
 
-        /* Text container next to image */
-        .pet > div {
-            max-width: 600px;
+        .pet-info {
+            flex: 1;
+            z-index: 2;
         }
 
-        /* Buttons styling */
-        .button-group {
-            margin-top: 10px;
-        }
-
-        .buy-btn, .cart-btn {
-            background-color: #f8b500;
-            border: none;
-            color: #fff;
-            padding: 8px 16px;
-            margin-right: 10px;
+        /* Buttons */
+        .price, .buy-btn, .cart-btn {
+            display: inline-block;
+            margin: 8px 8px 8px 0;
+            padding: 10px 18px;
             border-radius: 8px;
+            border: none;
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            font-family: 'Fredoka', sans-serif;
+            user-select: none;
+        }
+
+        .price {
+            background-color: #f0a500;
+            color: white;
+            cursor: default;
+        }
+
+        .buy-btn {
+            background-color: #28a745;
+            color: white;
         }
 
         .buy-btn:hover {
-            background-color: #d6a500;
+            background-color: #218838;
         }
 
         .cart-btn {
-            background-color: #6ab04c;
+            background-color: #007bff;
+            color: white;
         }
 
         .cart-btn:hover {
-            background-color: #4c7c33;
-        }
-
-        /* Price styling */
-        .price {
-            font-weight: bold;
-            margin-top: 8px;
-            font-size: 1.1em;
-        }
-
-        /* Responsive for smaller screens */
-        @media (max-width: 600px) {
-            .pet {
-                flex-direction: column !important;
-                text-align: center;
-            }
-            .pet img {
-                width: 100%;
-                max-width: 100%;
-                margin-bottom: 15px;
-            }
-            .button-group {
-                display: flex;
-                justify-content: center;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
+            background-color: #0056b3;
         }
 
         footer {
@@ -160,6 +151,8 @@
             color: #fff;
             padding: 20px;
             text-align: center;
+            position: relative;
+            z-index: 2;
         }
 
         .contact {
@@ -179,201 +172,212 @@
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
             transition: background-color 0.3s ease;
+            z-index: 10;
         }
 
         .help-button:hover {
             background-color: #e55b50;
         }
+
+        /* Responsive for mobile */
+        @media (max-width: 700px) {
+            .pet {
+                flex-direction: column !important;
+                text-align: center;
+            }
+            .pet img {
+                width: 100%;
+                max-width: 100%;
+                border-radius: 15px;
+            }
+            .pet-info {
+                margin-top: 15px;
+            }
+            nav {
+                flex-wrap: wrap;
+            }
+            nav a {
+                margin: 10px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>🐶🐱 WELCOME TO THE PET PARADISE 🐱🐶</h1>
-        <p>Find your new furry friend today!</p>
-    </header>
+<header>
+    <h1>🐶🐱 WELCOME TO THE PET PARADISE 🐱🐶</h1>
+    <p>Find your new furry friend today!</p>
+</header>
 
-    <nav>
-        <a href="#">HOME</a>
-        <a href="#dogs">DOGS</a>
-        <a href="#cats">CATS</a>
-        <a href="#horses">HORSES</a>
-        <a href="#contact">CONTACT</a>
-    </nav>
+<nav>
+    <a href="#">HOME</a>
+    <a href="#dogs">DOGS</a>
+    <a href="#cats">CATS</a>
+    <a href="#horses">HORSES</a>
+    <a href="#contact">CONTACT</a>
+</nav>
 
-    <section class="pet-section" id="dogs">
-        <h2>Dogs for Sale</h2>
-
-        <div class="pet">
-            <img src="IMAGES/nature-animals-grass-puppies-wallpaper-preview.jpg" alt="Golden Retriever" />
+<section class="pet-section" id="dogs">
+    <h2>Dogs for Sale</h2>
+    <div class="pet">
+        <img src="IMAGES/nature-animals-grass-puppies-wallpaper-preview.jpg" alt="Golden Retriever" />
+        <div class="pet-info">
+            <h3>Golden Retriever</h3>
+            <p>Friendly, active, trained, a great family puppy.</p>
             <div>
-                <h3>Golden Retriever</h3>
-                <p>Friendly, active, trained, a great family puppy.</p>
-                <p class="price">Price: ₹10,000</p>
-                <div class="button-group">
-                    <button class="buy-btn">Buy</button>
-                    <button class="cart-btn">Add to Cart</button>
-                </div>
+                <span class="price">Price: ₹5,000</span>
+                <button class="buy-btn">Buy</button>
+                <button class="cart-btn">Add to Cart</button>
             </div>
         </div>
-
-        <div class="pet">
-            <img src="IMAGES/cute-puppy-kitty-kitten-wallpaper-preview.jpg" alt="Labrador" />
+    </div>
+    <div class="pet">
+        <img src="IMAGES/cute-puppy-kitty-kitten-wallpaper-preview.jpg" alt="Labrador" />
+        <div class="pet-info">
+            <h3>Labrador</h3>
+            <p>Loyal, gentle, and easy to train.</p>
             <div>
-                <h3>Labrador</h3>
-                <p>Loyal, gentle, and easy to train.</p>
-                <p class="price">Price: ₹9,500</p>
-                <div class="button-group">
-                    <button class="buy-btn">Buy</button>
-                    <button class="cart-btn">Add to Cart</button>
-                </div>
+                <span class="price">Price: ₹2,000</span>
+                <button class="buy-btn">Buy</button>
+                <button class="cart-btn">Add to Cart</button>
             </div>
         </div>
-
-        <div class="pet">
-            <img src="IMAGES/realistic-image-of-german-shepherd-free-photo.jpeg" alt="German Shephard" />
+    </div>
+    <div class="pet">
+        <img src="IMAGES/realistic-image-of-german-shepherd-free-photo.jpeg" alt="German Shephard" />
+        <div class="pet-info">
+            <h3>German Shephard</h3>
+            <p>Smart, Alert, Protective.</p>
             <div>
-                <h3>German Shephard</h3>
-                <p>Smart, Alert, Protective.</p>
-                <p class="price">Price: ₹12,000</p>
-                <div class="button-group">
-                    <button class="buy-btn">Buy</button>
-                    <button class="cart-btn">Add to Cart</button>
-                </div>
+                <span class="price">Price: ₹8,000</span>
+                <button class="buy-btn">Buy</button>
+                <button class="cart-btn">Add to Cart</button>
             </div>
         </div>
-
-        <div class="pet">
-            <img src="IMAGES/dog-tongue-puppy-wallpaper-preview.jpg" alt="Pomeranion" />
+    </div>
+    <div class="pet">
+        <img src="IMAGES/dog-tongue-puppy-wallpaper-preview.jpg" alt="Pomeranion" />
+        <div class="pet-info">
+            <h3>Pomeranion</h3>
+            <p>Smart, cutest, safe for children.</p>
             <div>
-                <h3>Pomeranion</h3>
-                <p>Smart, cutest, safe for childrens.</p>
-                <p class="price">Price: ₹8,000</p>
-                <div class="button-group">
-                    <button class="buy-btn">Buy</button>
-                    <button class="cart-btn">Add to Cart</button>
-                </div>
+                <span class="price">Price: ₹18,000</span>
+                <button class="buy-btn">Buy</button>
+                <button class="cart-btn">Add to Cart</button>
             </div>
         </div>
+    </div>
+</section>
 
-    </section>
-
-    <section class="pet-section" id="cats">
-        <h2>Cats for Sale</h2>
-
-        <div class="pet">
-            <img src="IMAGES/images (2).jpg" alt="Persian Cat" />
+<section class="pet-section" id="cats">
+    <h2>Cats for Sale</h2>
+    <div class="pet">
+        <img src="IMAGES/images (2).jpg" alt="Persian Cat" />
+        <div class="pet-info">
+            <h3>Persian Cat</h3>
+            <p>Quiet, sweet, and loves affection.</p>
             <div>
-                <h3>Persian Cat</h3>
-                <p>Quiet, sweet, and loves affection.</p>
-                <p class="price">Price: ₹7,500</p>
-                <div class="button-group">
-                    <button class="buy-btn">Buy</button>
-                    <button class="cart-btn">Add to Cart</button>
-                </div>
+                <span class="price">Price: ₹5,000</span>
+                <button class="buy-btn">Buy</button>
+                <button class="cart-btn">Add to Cart</button>
             </div>
         </div>
-
-        <div class="pet">
-            <img src="IMAGES/kitten-briton-look-kid-wallpaper-preview.jpg" alt="Siamese Cat" />
+    </div>
+    <div class="pet">
+        <img src="IMAGES/kitten-briton-look-kid-wallpaper-preview.jpg" alt="Siamese Cat" />
+        <div class="pet-info">
+            <h3>Siamese Cat</h3>
+            <p>Talkative and social with striking looks.</p>
             <div>
-                <h3>Siamese Cat</h3>
-                <p>Talkative and social with striking looks.</p>
-                <p class="price">Price: ₹6,500</p>
-                <div class="button-group">
-                    <button class="buy-btn">Buy</button>
-                    <button class="cart-btn">Add to Cart</button>
-                </div>
+                <span class="price">Price: ₹4,000</span>
+                <button class="buy-btn">Buy</button>
+                <button class="cart-btn">Add to Cart</button>
             </div>
         </div>
-
-        <div class="pet">
-            <img src="IMAGES/images.jpg" alt="Indian Cat" />
+    </div>
+    <div class="pet">
+        <img src="IMAGES/images.jpg" alt="Indian Cat" />
+        <div class="pet-info">
+            <h3>Indian Cat</h3>
+            <p>Moody, Cute, Possessive.</p>
             <div>
-                <h3>Indian Cat</h3>
-                <p>Moody, Cute, Possessive.</p>
-                <p class="price">Price: ₹5,000</p>
-                <div class="button-group">
-                    <button class="buy-btn">Buy</button>
-                    <button class="cart-btn">Add to Cart</button>
-                </div>
+                <span class="price">Price: ₹2,000</span>
+                <button class="buy-btn">Buy</button>
+                <button class="cart-btn">Add to Cart</button>
             </div>
         </div>
-
-        <div class="pet">
-            <img src="IMAGES/images (1).jpg" alt="Russian Cat" />
+    </div>
+    <div class="pet">
+        <img src="IMAGES/images (1).jpg" alt="Russian Cat" />
+        <div class="pet-info">
+            <h3>Russian Cat</h3>
+            <p>Pure white, loves cuddling.</p>
             <div>
-                <h3>Russian Cat</h3>
-                <p>Pure white, love cuddling.</p>
-                <p class="price">Price: ₹7,000</p>
-                <div class="button-group">
-                    <button class="buy-btn">Buy</button>
-                    <button class="cart-btn">Add to Cart</button>
-                </div>
+                <span class="price">Price: ₹6,000</span>
+                <button class="buy-btn">Buy</button>
+                <button class="cart-btn">Add to Cart</button>
             </div>
         </div>
+    </div>
+</section>
 
-    </section>
-
-    <section class="pet-section" id="horses">
-        <h2>Horses for Sale</h2>
-
-        <div class="pet">
-            <img src="IMAGES/images (3).jpg" alt="Marwari" />
+<section class="pet-section" id="horses">
+    <h2>Horses for Sale</h2>
+    <div class="pet">
+        <img src="IMAGES/images (3).jpg" alt="Marwari" />
+        <div class="pet-info">
+            <h3>Marwari</h3>
+            <p>Muscular, Fast, Loyal.</p>
             <div>
-                <h3>Marwari</h3>
-                <p>Muscular, Fast, Loyal.</p>
-                <p class="price">Price: ₹50,000</p>
-                <div class="button-group">
-                    <button class="buy-btn">Buy</button>
-                    <button class="cart-btn">Add to Cart</button>
-                </div>
+                <span class="price">Price: ₹5,00000</span>
+                <button class="buy-btn">Buy</button>
+                <button class="cart-btn">Add to Cart</button>
             </div>
         </div>
-
-        <div class="pet">
-            <img src="IMAGES/images (4).jpg" alt="Nukra" />
+    </div>
+    <div class="pet">
+        <img src="IMAGES/images (4).jpg" alt="Nukra" />
+        <div class="pet-info">
+            <h3>Nukra</h3>
+            <p>Loyal, pure white, easy to train.</p>
             <div>
-                <h3>Nukra</h3>
-                <p>Loyal, pure white, easy to train.</p>
-                <p class="price">Price: ₹55,000</p>
-                <div class="button-group">
-                    <button class="buy-btn">Buy</button>
-                    <button class="cart-btn">Add to Cart</button>
-                </div>
+                <span class="price">Price: ₹4,50,000</span>
+                <button class="buy-btn">Buy</button>
+                <button class="cart-btn">Add to Cart</button>
             </div>
         </div>
-
-        <div class="pet">
-            <img src="IMAGES/492e3154d7fb5f00fba5f5ec525f21f4.jpg" alt="Kathiyawari" />
+    </div>
+    <div class="pet">
+        <img src="IMAGES/492e3154d7fb5f00fba5f5ec525f21f4.jpg" alt="Kathiyawari" />
+        <div class="pet-info">
+            <h3>Kathiyawari</h3>
+            <p>Smart, fast, tall.</p>
             <div>
-                <h3>Kathiyawari</h3>
-                <p>Smart, fast, tall.</p>
-                <p class="price">Price: ₹48,000</p>
-                <div class="button-group">
-                    <button class="buy-btn">Buy</button>
-                    <button class="cart-btn">Add to Cart</button>
-                </div>
+                <span class="price">Price: ₹4,00000</span>
+                <button class="buy-btn">Buy</button>
+                <button class="cart-btn">Add to Cart</button>
             </div>
         </div>
+    </div>
+</section>
 
-    </section>
+<footer id="contact">
+    <h3>Contact Us</h3>
+    <div class="contact">
+        <p><strong>Abhishek Patil (owner)</strong> - 📞 +91-9876543210</p>
+        <p><strong>Vishal Pardeshi</strong> - 📞 +91-9123456789</p>
+        <p><strong>Yash Bhadange</strong> - 📞 +91-8118179045</p>
+        <p><strong>Rishi Gavali</strong> - 📞 +91-7579909660</p>
+    </div>
+    <p>&copy; 2025 Pet Paradise Shop. All rights reserved.</p>
+</footer>
 
-    <footer id="contact">
-        <h3>Contact Us</h3>
-        <div class="contact">
-            <p><strong>Abhishek Patil (owner)</strong> - 📞 +91-9876543210</p>
-            <p><strong>Vishal Pardeshi </strong> - 📞 +91-9123456789</p>
-            <p><strong>Yash Bhadange </strong> - 📞 +91-8118179045</p>
-            <p><strong>Rishi Gavali </strong> - 📞 +91-8599096604</p>
-        </div>
-        <p>&copy; 2025 Pet Paradise Shop. All rights reserved.</p>
-    </footer>
-
-    <!-- Help Button -->
-    <button class="help-button" onclick="alert('For help, contact the owner, Thanks.')">Help</button>
+<!-- Help Button -->
+<button class="help-button" onclick="alert('For help, contact the owner, Thanks.')">Help</button>
 
 </body>
+</html
+
 
 
 
